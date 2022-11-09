@@ -69,6 +69,17 @@ public interface TimeTrackingConfig extends Config
 	}
 
 	@ConfigItem(
+			keyName = "contractNotification",
+			name = "Contrcat notification",
+			description = "Notify you whenever your farming contract is completed",
+			position = 3
+	)
+	default boolean contractNotification()
+	{
+		return false;
+	}
+
+	@ConfigItem(
 		keyName = "farmingContractInfoBox",
 		name = "Show farming contract infobox",
 		description = "Show an infobox of your current farming contract when inside the farming guild",

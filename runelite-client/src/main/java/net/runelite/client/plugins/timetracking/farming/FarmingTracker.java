@@ -71,6 +71,7 @@ public class FarmingTracker
 	private final Notifier notifier;
 	private final CompostTracker compostTracker;
 	private final PaymentTracker paymentTracker;
+	private final FarmingContractManager contractManager;
 
 	private final Map<Tab, SummaryState> summaries = new EnumMap<>(Tab.class);
 
@@ -536,7 +537,7 @@ public class FarmingTracker
 
 					wasNotified.put(profilePatch, true);
 
-					if (!firstNotifyCheck && shouldNotify)
+					if (!firstNotifyCheck && (shouldNotify || shouldNotifyForContract(patch)))
 					{
 						sendNotification(profile, prediction, patch);
 					}
@@ -544,6 +545,11 @@ public class FarmingTracker
 			}
 		}
 		firstNotifyCheck = false;
+	}
+
+	private boolean shouldNotifyForContract(FarmingPatch patch) {
+		 boolean isContract = contractManager.shouldHighlightFarmingTabPanel(patch);
+		 return config.contractNotification() && isContract;
 	}
 
 	@VisibleForTesting
